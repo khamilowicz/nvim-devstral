@@ -1,0 +1,157 @@
+*devstral.nvim*  Devstral.nvim - Chat and Agent Assistant for Neovim
+
+==============================================================================
+CONTENTS                                        *devstral-contents*
+
+1. Introduction                                 |devstral-introduction|
+2. Installation                                |devstral-installation|
+3. Configuration                               |devstral-configuration|
+4. Usage                                        |devstral-usage|
+5. Commands                                     |devstral-commands|
+6. Keymaps                                      |devstral-keymaps|
+7. API Configuration                           |devstral-api-config|
+
+==============================================================================
+1. INTRODUCTION                                 *devstral-introduction*
+
+Devstral.nvim is a Neovim plugin that provides chat and agent assistant
+functionality with Devstral AI integration. It offers:
+
+- Interactive chat interface with Devstral AI models
+- Code analysis and suggestions for your current buffer
+- Seamless integration with LazyVim ecosystem
+- Customizable configuration
+
+==============================================================================
+2. INSTALLATION                                *devstral-installation*
+
+USING LAZYVIM                                  *devstral-installation-lazyvim*
+
+Add to your LazyVim configuration:
+
+    {
+      "your-username/devstral.nvim",
+      dependencies = {
+        "nvim-lua/plenary.nvim",  -- Optional, for better HTTP handling
+      },
+      config = function()
+        require("devstral").setup({
+          api_key = "your-devstral-api-key",
+        })
+      end,
+    }
+
+MANUAL INSTALLATION                            *devstral-installation-manual*
+
+1. Clone the repository:
+>   git clone https://github.com/your-username/devstral.nvim.git \
+    ~/.local/share/nvim/site/pack/plugins/start/devstral.nvim
+
+2. Add configuration to your init.lua:
+>   require("devstral").setup({
+>     api_key = "your-devstral-api-key",
+>   })
+
+==============================================================================
+3. CONFIGURATION                               *devstral-configuration*
+
+BASIC CONFIGURATION                            *devstral-configuration-basic*
+
+    require("devstral").setup({
+      api_key = "your-api-key",  -- Required
+      api_url = "https://api.devstral.ai/v1",  -- Default
+      
+      chat = {
+        window = {
+          width = 0.8,    -- 80% of editor width
+          height = 0.7,   -- 70% of editor height
+          border = "rounded",
+        },
+        prompt = "Devstral> ",
+      },
+      
+      agent = {
+        enabled = true,
+        auto_suggest = false,
+        max_file_size = 100000,  -- 100KB
+      },
+    })
+
+LAZYVIM SPECIFIC CONFIGURATION                 *devstral-configuration-lazyvim*
+
+    require("devstral.config").setup({
+      lazyvim = {
+        integrate_ui = true,
+        keymaps = {
+          chat = "<leader>dc",
+          chat_toggle = "<leader>dt",
+          agent = "<leader>da",
+          suggestions = "<leader>ds",
+        },
+      },
+    })
+
+==============================================================================
+4. USAGE                                        *devstral-usage*
+
+CHAT INTERFACE                                  *devstral-usage-chat*
+
+Open the chat interface with |:DevstralChat| or toggle it with
+|:DevstralChatToggle|. Type your messages and get responses from
+Devstral AI.
+
+AGENT ASSISTANT                                *devstral-usage-agent*
+
+Use |:DevstralAgent| to run code analysis on the current buffer or
+|:DevstralAgentSuggest| to get suggestions for improvements.
+
+==============================================================================
+5. COMMANDS                                     *devstral-commands*
+
+CHAT COMMANDS                                  *devstral-commands-chat*
+
+:DevstralChat
+    Open the Devstral chat interface.
+
+:DevstralChatToggle
+    Toggle the Devstral chat interface.
+
+AGENT COMMANDS                                 *devstral-commands-agent*
+
+:DevstralAgent
+    Run code analysis on the current buffer using Devstral Agent.
+
+:DevstralAgentSuggest
+    Get suggestions for the current buffer from Devstral Agent.
+
+==============================================================================
+6. KEYMAPS                                      *devstral-keymaps*
+
+DEFAULT KEYMAPS                                *devstral-keymaps-default*
+
+<leader>dc
+    Open Devstral Chat
+
+<leader>dt
+    Toggle Devstral Chat
+
+<leader>da
+    Run Devstral Agent
+
+<leader>ds
+    Get Devstral Suggestions
+
+==============================================================================
+7. API CONFIGURATION                           *devstral-api-config*
+
+You need a Devstral API key for full functionality. You can get one
+by signing up at https://devstral.ai.
+
+Set your API key in the configuration:
+
+    require("devstral").setup({
+      api_key = "your-devstral-api-key",
+    })
+
+==============================================================================
+vim:tw=78:ts=8:ft=help:norl:
